@@ -1,4 +1,8 @@
 package com.nj.secretary.services.monologue.service;
 
-public class MonologueService {
+public interface MonologueService {
+	
+	public void addQuestionText(String questionText) throws Exception;
+	
+	public void addMonologueText(String monologueText) throws Exception;
 }
