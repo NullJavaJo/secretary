@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import com.nj.secretary.services.monologue.repository.MonologueDAO;
 import com.nj.secretary.services.monologue.service.MonologueService;
 
+
 public class MonologueServiceImpl implements MonologueService {
 	
 	@Autowired

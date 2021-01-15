@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import com.nj.secretary.services.monologue.repository.MonologueDAO;
 
-@Repository("MonologueDAOImpl")
+@Repository("monologueDAOImpl")
 public class MonologueDAOImpl implements MonologueDAO{
 	
 	@Autowired
