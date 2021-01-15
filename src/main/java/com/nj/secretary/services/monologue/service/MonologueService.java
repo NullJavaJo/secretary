@@ -1,8 +1,9 @@
 package com.nj.secretary.services.monologue.service;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Service;
 
-@Service
+@Mapper
 public interface MonologueService {
 	
 	public void addQuestionText(String questionText) throws Exception;

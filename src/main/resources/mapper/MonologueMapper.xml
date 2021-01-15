@@ -5,7 +5,7 @@
 <mapper namespace="com.nj.secretary.services.monologue.service.MonologueService">
 
 <!--    type=vo,dto,domain 파일명      id=내가 사용ㅇ할 이름 임의로 정하면 됨 -->
-    <resultMap type="Monologue" id="qm">
+    <resultMap type="com.nj.secretary.services.monologue.domain.Monologue" id="qm">
 <!--        property=필드 변수명      column=칼럼에 넣어준 칼럼명 -->
               
        <result property="userId"       column="user_id"/>
