@@ -18,7 +18,7 @@ public class MonologueController {
 	
 	@GetMapping("addQuestionText")
 	public String addQuestionText(String questionText) throws Exception{
-		return "home.html";
+		return "home";
 	}
 	
 }
