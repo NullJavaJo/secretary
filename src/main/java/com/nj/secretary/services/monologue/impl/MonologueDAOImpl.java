@@ -36,13 +36,13 @@ public class MonologueDAOImpl implements MonologueDAO{
 
 
 
-//	@Override
-//	public int getQeustionId(int questionId) throws Exception {
-//		// TODO Auto-generated method stub
-//		System.out.println("monologueDAOImpi  getQuestionId~~");
-//		return sqlsession.selectOne("MonologueMapper.addQuestionText", questionId);
-//		
-//	}
-//	
-//	
+	@Override
+	public int getQeustionId(int questionId) throws Exception {
+		// TODO Auto-generated method stub
+		System.out.println("monologueDAOImpi  getQuestionId~~");
+		return sqlsession.selectOne("MonologueMapper.addQuestionText", questionId);
+		
+	}
+	
+	
 }

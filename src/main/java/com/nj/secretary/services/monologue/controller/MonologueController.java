@@ -49,6 +49,8 @@ public class MonologueController {
 		return "monologue/monologue";
 		
 	}
+	
+	
     
 	
 	

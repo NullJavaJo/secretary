@@ -30,13 +30,13 @@ public class MonologueServiceImpl implements MonologueService {
 		
 	}
 
-//	@Override
-//	public int getQuestionId(int questionId) throws Exception {
-//		System.out.println("monologueServiceImpl   getQuestionId@@");
-//		// TODO Auto-generated method stub
-//		return monologueDAO.getQeustionId(questionId);
-//	}
-//	
+	@Override
+	public int getQuestionId(int questionId) throws Exception {
+		System.out.println("monologueServiceImpl   getQuestionId@@");
+		// TODO Auto-generated method stub
+		return monologueDAO.getQeustionId(questionId);
+	}
+	
 	
 
 }
