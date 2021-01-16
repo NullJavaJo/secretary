@@ -6,9 +6,9 @@ public class Monologue{
 	
 	//field
 	private String userId;           //사용자 아이디:중복X
-	private String questionText;     //1문내용
+//	private String questionText;     //1문내용
 	private String monologueText;    //1답내용
-	private int questionId;          //1문고유번호
+//	private int questionId;          //1문고유번호
 	private int monologueId;         //1답고유번호
 	private int reportCount;         //신고수
 	private boolean shareStatus;     //공유상태 0:default:false
@@ -33,15 +33,6 @@ public class Monologue{
 	}
 
 
-	public String getQuestionText() {
-		return questionText;
-	}
-
-
-	public void setQuestionText(String questionText) {
-		this.questionText = questionText;
-	}
-
 
 	public String getMonologueText() {
 		return monologueText;
@@ -53,14 +44,6 @@ public class Monologue{
 	}
 
 
-	public int getQuestionId() {
-		return questionId;
-	}
-
-
-	public void setQuestionId(int questionId) {
-		this.questionId = questionId;
-	}
 
 
 	public int getMonologueId() {
@@ -113,14 +96,14 @@ public class Monologue{
 	}
 
 
-	
 	@Override
 	public String toString() {
-		return "Monologue [userId=" + userId + ", questionText=" + questionText + ", monologueText=" + monologueText
-				+ ", questionId=" + questionId + ", monologueId=" + monologueId + ", reportCount=" + reportCount
-				+ ", shareStatus=" + shareStatus + ", blindStatus=" + blindStatus + ", monologueDate=" + monologueDate
-				+ "]";
+		return "Monologue [userId=" + userId + ", monologueText=" + monologueText + ", monologueId=" + monologueId
+				+ ", reportCount=" + reportCount + ", shareStatus=" + shareStatus + ", blindStatus=" + blindStatus
+				+ ", monologueDate=" + monologueDate + "]";
 	}
+
+
 	
 	
 	

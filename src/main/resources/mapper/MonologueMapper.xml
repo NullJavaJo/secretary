@@ -5,23 +5,16 @@
 <mapper namespace="com.nj.secretary.services.monologue.service.MonologueService">
 
 <!--    type=vo,dto,domain 파일명      id=내가 사용ㅇ할 이름 임의로 정하면 됨 -->
-    <resultMap type="com.nj.secretary.services.monologue.domain.Monologue" id="qm">
+    <resultMap type="com.nj.secretary.services.monologue.domain.Question" id="question">
 <!--        property=필드 변수명      column=칼럼에 넣어준 칼럼명 -->
               
-       <result property="userId"       column="user_id" jdbcType="VARCHAR"/>
        <result property="questionText"   column="question_text" jdbcType="VARCHAR"/>
-       <result property="monologueText"   column="monologue_text" jdbcType="VARCHAR"/>
        <result property="questionId"   column="question_id" jdbcType="INTEGER"/>
-       <result property="monologueId"   column="monologue_id" jdbcType="INTEGER"/>
-       <result property="reportCount"   column="report_count" jdbcType="INTEGER"/>
-       <result property="shareStatus"   column="share_status" jdbcType="CHAR"/>
-       <result property="blindStatus"   column="blind_status" jdbcType="CHAR"/>
-       <result property="monologueDate"   column="monologue_date" jdbcType="DATE"/>
     </resultMap>
 
 
 	<insert id="addQuestionText"
-		parameterType="com.nj.secretary.services.monologue.domain.Monologue">
+		parameterType="com.nj.secretary.services.monologue.domain.Question">
 
 		INSERT INTO questions (question_id,question_text)
 		VALUES (question_seq.NEXTVAL,#{questionText})
@@ -29,6 +22,22 @@
 	</insert>
 
 
+
+<!--    type=vo,dto,domain 파일명      id=내가 사용ㅇ할 이름 임의로 정하면 됨 -->
+    <resultMap type="com.nj.secretary.services.monologue.domain.Monologue" id="monologue">
+<!--        property=필드 변수명      column=칼럼에 넣어준 칼럼명 -->
+              
+       <result property="userId"       column="user_id" jdbcType="VARCHAR"/>
+       <result property="monologueText"   column="monologue_text" jdbcType="VARCHAR"/>
+       <result property="monologueId"   column="monologue_id" jdbcType="INTEGER"/>
+       <result property="reportCount"   column="report_count" jdbcType="INTEGER"/>
+       <result property="shareStatus"   column="share_status" jdbcType="CHAR"/>
+       <result property="blindStatus"   column="blind_status" jdbcType="CHAR"/>
+       <result property="monologueDate"   column="monologue_date" jdbcType="DATE"/>
+    </resultMap>
+    
+    
+    
 	<insert id="addMonologueText"
 	parameterType="com.nj.secretary.services.monologue.domain.Monologue">
 
