@@ -27,7 +27,7 @@ public class MonologueController {
 
 	@PostMapping("getQuestionId")
 	public int getQuestionId(int questionId) throws Exception {
-		System.out.println("monologueController" + questionId);
+		System.out.println("monologueController getQuestionId" + questionId);
 		monologueService.getQuestionId(questionId);
 
 		return questionId;
@@ -36,7 +36,7 @@ public class MonologueController {
 
 	@PostMapping("addQuestionText")
 	public String addQuestionText(String questionText) throws Exception {
-		System.out.println("monologueController" + questionText);
+		System.out.println("monologueController addQuestionText  " + questionText);
 		monologueService.addQuestionText(questionText);
 
 		return "home";

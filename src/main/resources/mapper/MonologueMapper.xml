@@ -23,8 +23,8 @@
     
   <insert id="addQuestionText"  parameterType="com.nj.secretary.services.monologue.domain.Monologue">
 	
-	INSERT INTO questions (question_id,question_text)
-	VALUES (#{questionId.NEXTVAL},#{questionText})
+	INSERT INTO questions (question_text,question_id)
+	VALUES (#{questionText},#{questionId.NEXTVAL})
   
   </insert>
   
