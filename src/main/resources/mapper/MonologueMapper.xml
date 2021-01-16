@@ -8,14 +8,14 @@
     <resultMap type="com.nj.secretary.services.monologue.domain.Monologue" id="qm">
 <!--        property=필드 변수명      column=칼럼에 넣어준 칼럼명 -->
               
-       <result property="userId"       column="user_id"/>
-       <result property="questionText"   column="question_text"/>
+       <result property="userId"       column="user_id" />
+       <result property="questionText"   column="question_text" />
        <result property="monologueText"   column="monologue_text"/>
-       <result property="questionId"   column="question_id"/>
-       <result property="monologueId"   column="monologue_id"/>
-       <result property="reportCount"   column="report_count"/>
-       <result property="shareStatus"   column="share_status"/>
-       <result property="blindStatus"   column="blind_status"/>
+       <result property="questionId"   column="question_id" />
+       <result property="monologueId"   column="monologue_id" />
+       <result property="reportCount"   column="report_count" />
+       <result property="shareStatus"   column="share_status" />
+       <result property="blindStatus"   column="blind_status" />
        <result property="monologueDate"   column="monologue_date"/>
     
     </resultMap>
@@ -23,8 +23,8 @@
     
   <insert id="addQuestionText"  parameterType="com.nj.secretary.services.monologue.domain.Monologue">
 	
-	INSERT INTO questions (question_id, question_text)
-	VALUES (#{questionId.NEXTVAL} , #{questionText})
+	INSERT INTO questions (question_id,question_text)
+	VALUES (#{questionId.NEXTVAL},#{questionText})
   
   </insert>
   

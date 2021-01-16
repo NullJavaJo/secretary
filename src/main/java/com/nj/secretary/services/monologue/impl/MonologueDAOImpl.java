@@ -15,13 +15,25 @@ public class MonologueDAOImpl implements MonologueDAO{
 	@Override
 	public void addQuestionText(String questionText) throws Exception {
 		// TODO Auto-generated method stub
+		System.out.println("monologueDAOImpi  addQuestionText~~");
 		sqlsession.insert("MonologueMapper.addQuestionText", questionText);
 	}
+	
+	
 
 	@Override
 	public void addMonologueText(String monologueText) throws Exception {
 		// TODO Auto-generated method stub
 		
+	}
+
+
+
+	@Override
+	public int getQeustionId(int questionId) throws Exception {
+		// TODO Auto-generated method stub
+		System.out.println("monologueDAOImpi  getQuestionId~~");
+		return sqlsession.selectOne("MonologueMapper.addQuestionText", questionId);
 	}
 	
 	

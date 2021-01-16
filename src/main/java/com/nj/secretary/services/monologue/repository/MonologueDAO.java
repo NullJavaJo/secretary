@@ -8,6 +8,9 @@ public interface MonologueDAO {
 	//Insert
 	public void addQuestionText(String questionText) throws Exception;
 	
+	public int getQeustionId(int questionId) throws Exception;
+	
+	
 	public void addMonologueText(String monologueText) throws Exception;
 	
 		

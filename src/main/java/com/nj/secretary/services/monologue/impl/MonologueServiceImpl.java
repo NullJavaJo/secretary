@@ -17,6 +17,7 @@ public class MonologueServiceImpl implements MonologueService {
 	@Override
 	public void addQuestionText(String questionText) throws Exception {
 		// TODO Auto-generated method stub
+		System.out.println("monologueServiceImpl   addQuestionText@@");
 		monologueDAO.addQuestionText(questionText);
 		
 	}
@@ -26,6 +27,13 @@ public class MonologueServiceImpl implements MonologueService {
 		// TODO Auto-generated method stub
 		monologueDAO.addMonologueText(monologueText);
 		
+	}
+
+	@Override
+	public int getQuestionId(int questionId) throws Exception {
+		System.out.println("monologueServiceImpl   getQuestionId@@");
+		// TODO Auto-generated method stub
+		return monologueDAO.getQeustionId(questionId);
 	}
 	
 	
