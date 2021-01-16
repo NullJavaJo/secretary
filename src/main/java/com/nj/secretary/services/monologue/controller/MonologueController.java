@@ -22,7 +22,7 @@ public class MonologueController {
 	@GetMapping("addQuestionText")
 	public String addQuestionText() throws Exception {
 		System.out.println("monologueController addQuestionText 시작");
-		return "home";
+		return "/home/home";
 	}
 
 	@PostMapping("addQuestionText")
@@ -32,6 +32,22 @@ public class MonologueController {
 
 		return "home";
 
+	}
+	
+	
+	@GetMapping("addMonologueText")
+	public String addMonologueText() throws Exception{
+		System.out.println("monologueController addMonologueText 시작");
+		return "home";
+	}
+	
+	@PostMapping("addMonologueText")
+	public String addMonologueText(String monologueText) throws Exception{
+		System.out.println("monologueController   addMonologueText" +monologueText);
+		monologueService.addMonologueText(monologueText);
+		
+		return "home";
+		
 	}
     
 	

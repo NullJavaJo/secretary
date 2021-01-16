@@ -28,19 +28,21 @@ public class MonologueDAOImpl implements MonologueDAO{
 
 	@Override
 	public void addMonologueText(String monologueText) throws Exception {
+		System.out.println("monologueDAOImpl  addMonologueText~~~");
+		sqlsession.insert("MonologueMapper.addMonologueText", monologueText);
 		// TODO Auto-generated method stub
 		
 	}
 
 
 
-	@Override
-	public int getQeustionId(int questionId) throws Exception {
-		// TODO Auto-generated method stub
-		System.out.println("monologueDAOImpi  getQuestionId~~");
-		return sqlsession.selectOne("MonologueMapper.addQuestionText", questionId);
-		
-	}
-	
-	
+//	@Override
+//	public int getQeustionId(int questionId) throws Exception {
+//		// TODO Auto-generated method stub
+//		System.out.println("monologueDAOImpi  getQuestionId~~");
+//		return sqlsession.selectOne("MonologueMapper.addQuestionText", questionId);
+//		
+//	}
+//	
+//	
 }

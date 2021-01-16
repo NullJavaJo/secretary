@@ -8,7 +8,7 @@ public interface MonologueService {
 	
 	public void addQuestionText(String questionText) throws Exception;
 	
-	public int getQuestionId(int questionId) throws Exception;
+	//public int getQuestionId(int questionId) throws Exception;
 	
 	public void addMonologueText(String monologueText) throws Exception;
 }

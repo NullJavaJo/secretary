@@ -18,25 +18,26 @@
        <result property="blindStatus"   column="blind_status" jdbcType="CHAR"/>
        <result property="monologueDate"   column="monologue_date" jdbcType="DATE"/>
     </resultMap>
-    
-    
-  <insert id="addQuestionText"  parameterType="com.nj.secretary.services.monologue.domain.Monologue">
-	
-	INSERT INTO questions (question_id,question_text)
-	VALUES (question_id.NEXTVAL,#{questionText})
-  
-  </insert>
-  
-  <!-- 
 
-	<insert id="addMonologueText" parameterType="com.nj.secretary.services.monologue.domain.Monologue">
 
-		INSERT INTO questions (question_id, question_text)
-		VALUES (#{questionId.NEXTVAL} , #{questionText})
+	<insert id="addQuestionText"
+		parameterType="com.nj.secretary.services.monologue.domain.Monologue">
+
+		INSERT INTO questions (question_id,question_text)
+		VALUES (question_seq.NEXTVAL,#{questionText})
 
 	</insert>
 
-     -->
+
+	<insert id="addMonologueText"
+	parameterType="com.nj.secretary.services.monologue.domain.Monologue">
+
+	INSERT INTO monologue (monologue_id, question_id, monologue_text, monologue_date,user_id)
+	VALUES (monologue_seq.NEXTVAL, question_seq.NEXTVAL, #{monologueText},SYSDATE,'gyuri')
+   </insert>
+  
+                                                                                         
+
 
 </mapper>
 
