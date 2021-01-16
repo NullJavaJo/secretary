@@ -15,14 +15,14 @@ import com.nj.secretary.services.monologue.service.MonologueService;
 public class MonologueController {
 	
 	@Autowired
-	// @Qualifier("monologueServiceImpl")
+	 //@Qualifier("monologueServiceImpl")
 	MonologueService monologueService;
 	
 
 	@GetMapping("addQuestionText")
 	public String addQuestionText() throws Exception {
 		System.out.println("monologueController addQuestionText 시작");
-		return "/home/home";
+		return "home/home";
 	}
 
 	@PostMapping("addQuestionText")
@@ -30,7 +30,7 @@ public class MonologueController {
 		System.out.println("monologueController addQuestionText  " + questionText);
 		monologueService.addQuestionText(questionText);
 
-		return "home";
+		return "monologue/monologue";
 
 	}
 	
@@ -38,7 +38,7 @@ public class MonologueController {
 	@GetMapping("addMonologueText")
 	public String addMonologueText() throws Exception{
 		System.out.println("monologueController addMonologueText 시작");
-		return "home";
+		return "monologue/monologue";
 	}
 	
 	@PostMapping("addMonologueText")
@@ -46,7 +46,7 @@ public class MonologueController {
 		System.out.println("monologueController   addMonologueText" +monologueText);
 		monologueService.addMonologueText(monologueText);
 		
-		return "home";
+		return "monologue/monologue";
 		
 	}
     
