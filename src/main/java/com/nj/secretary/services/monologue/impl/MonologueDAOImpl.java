@@ -43,6 +43,15 @@ public class MonologueDAOImpl implements MonologueDAO{
 		return sqlsession.selectOne("MonologueMapper.addQuestionText", questionId);
 		
 	}
+
+
+	@Override
+	public String getQuestionText(String questionText) throws Exception {
+		
+		return sqlsession.selectOne("MonologueMapper.getQuestionText", questionText);
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 }

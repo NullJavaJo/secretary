@@ -10,5 +10,7 @@ public interface MonologueService {
 	
 	public int getQuestionId(int questionId) throws Exception;
 	
+	public String getQuestionText(String questionText) throws Exception;
+	
 	public void addMonologueText(String monologueText) throws Exception;
 }

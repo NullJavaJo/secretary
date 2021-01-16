@@ -36,6 +36,14 @@ public class MonologueServiceImpl implements MonologueService {
 		// TODO Auto-generated method stub
 		return monologueDAO.getQeustionId(questionId);
 	}
+
+	@Override
+	public String getQuestionText(String questionText) throws Exception {
+		// TODO Auto-generated method stub
+		return monologueDAO.getQuestionText(questionText);
+	}
+	
+	
 	
 	
 
