@@ -5,7 +5,7 @@ import com.nj.secretary.services.monologue.domain.Monologue;
 
 public interface MonologueDAO {
 	
-	//Insert
+	
 	public void addQuestionText(String questionText) throws Exception;
 	
 	public int getQeustionId(int questionId) throws Exception;

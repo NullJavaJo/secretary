@@ -12,6 +12,11 @@ public class MonologueDAOImpl implements MonologueDAO{
 	@Autowired
 	SqlSession sqlsession;
 	
+	public MonologueDAOImpl() {
+              System.out.println("default constructor ºÎ¸£±â~~~"+getClass());
+ 	}
+	
+	
 	@Override
 	public void addQuestionText(String questionText) throws Exception {
 		// TODO Auto-generated method stub
@@ -34,6 +39,7 @@ public class MonologueDAOImpl implements MonologueDAO{
 		// TODO Auto-generated method stub
 		System.out.println("monologueDAOImpi  getQuestionId~~");
 		return sqlsession.selectOne("MonologueMapper.addQuestionText", questionId);
+		
 	}
 	
 	
