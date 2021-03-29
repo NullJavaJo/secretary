@@ -14,3 +14,14 @@ Secret  + Diary = Secretary
 - 메인화면에서 매일 다른 질문에 답하며 나를 돌아볼 수 있는 회고록을 기록할 수 있습니다.
 
 ---
+
+### 💡사용기술
+
+- Java 8, JavaScript
+- Spring Boot : 2.4.2
+- Build Tool : Gradle
+- DB : Oracle
+- Open API : Kakao, fullCalendar, OpenWeatherMap, geolocation, summernote, papago
+- 개발환경 : IntelliJ, Eclipse, Postman, Git, GitHub
+
+---
