@@ -18,9 +18,9 @@ Secret  + Diary = Secretary
 ### 💡 사용기술
 
 - Java 8, JavaScript
-- Spring Boot : 2.4.2
+- Spring Boot : 2.4.1
 - Build Tool : Gradle
-- DB : Oracle
+- DB : Oracle 10g
 - Open API : Kakao, fullCalendar, OpenWeatherMap, geolocation, summernote, papago
 - 개발환경 : IntelliJ, Eclipse, Postman, Git, GitHub
 
