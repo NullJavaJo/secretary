@@ -1,7 +1,7 @@
 
 # Secretary
 
-### 💡서비스 소개
+### 💡 서비스 소개
 
 Secret  + Diary = Secretary
 
@@ -15,7 +15,7 @@ Secret  + Diary = Secretary
 
 ---
 
-### 💡사용기술
+### 💡 사용기술
 
 - Java 8, JavaScript
 - Spring Boot : 2.4.2
