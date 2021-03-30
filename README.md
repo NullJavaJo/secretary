@@ -17,7 +17,7 @@ Secret  + Diary = Secretary
 
 ### 💡 사용기술
 
-- Java 8, JavaScript
+- Java, JavaScript
 - Spring Boot : 2.4.1
 - Build Tool : Gradle
 - DB : Oracle 10g
