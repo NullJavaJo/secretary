@@ -26,4 +26,3 @@ Secret  + Diary = Secretary
 
 ---
 
-### 💡 ERD
