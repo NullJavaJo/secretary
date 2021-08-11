@@ -40,13 +40,22 @@ public class DiaryRestController {
     AlarmService alarmService;
 
     @GetMapping("getOthersDiaryList")
-    public List<Diary> getOthersDiaryList(@RequestParam("shareStatus") String shareStatus, @RequestParam("userId") String userId, Model model,HttpSession session){
+    public List<Diary> getOthersDiaryList(
+            @RequestParam("userId") String userId,
+            @RequestParam("startNum") int startNum,
+            @RequestParam("endNum") int endNum,
+            Model model,
+            HttpSession session)
+    {
         if(session.getAttribute("user")==null){
 
         }
+        Diary diary = new Diary();
+        diary.setUserId(userId);
+        diary.setStartNum(startNum);
+        diary.setEndNum(endNum);
         System.out.println("getOthersDiaryList start in controller");
-        System.out.println("test : " + shareStatus + userId);
-        List<Diary> list = diaryService.getOthersDiaryList(userId);
+        List<Diary> list = diaryService.getOthersDiaryList(diary);
         System.out.println("parse test : " + list);
         System.out.println("getOthersDiaryList finish in controller");
         model.addAttribute("list", list);
@@ -59,18 +68,28 @@ public class DiaryRestController {
         User user = (User)session.getAttribute("user");
         String userId = user.getUserId();
 
-
         System.out.println("삭제하기 위한 diary 객체 : " + diary.getDiaryId());
+        diary.setUserId(userId);
+        diary.setStartNum(0);
+        diary.setEndNum(12);
         diaryService.moveToBin(diary.getDiaryId());
-        List<Diary> list = diaryService.getDiaryList(userId);
+        List<Diary> list = diaryService.getDiaryList(diary);
 
         return list;
     }
     @GetMapping(value = "getDiaryList")
-    public List<Diary> listDiary(@RequestParam("userId") String user){
+    public List<Diary> listDiary(
+            @RequestParam("userId") String user,
+            @RequestParam("startNum") int startNum,
+            @RequestParam("endNum") int endNum
+    ){
 
         System.out.println("listDiary start in  Rest Controller");
-        List<Diary> list = diaryService.getDiaryList(user);
+        Diary diary = new Diary();
+        diary.setUserId(user);
+        diary.setStartNum(startNum);
+        diary.setEndNum(endNum);
+        List<Diary> list = diaryService.getDiaryList(diary);
         System.out.println("list : " + list);
         System.out.println("listDiary Rest Controller 완료");
         return list;
@@ -178,7 +197,9 @@ public class DiaryRestController {
     @GetMapping("binDiaryList")
     public List<Diary> binDiaryList(HttpSession session,Model model){
         User user = (User)session.getAttribute("user");
+
         List<Diary> list = diaryService.getBinList(user.getUserId());
+        System.out.println(list);
         return list;
     }
 
@@ -258,7 +279,7 @@ public class DiaryRestController {
             alarm.setAlarmText("좋아요를 받은 일기가 있어요!");
             alarmService.blindDiaryAlarm(alarm);
 
-            return "좋아합니다.";
+            return "좋아요를 눌렀습니다!";
         }
     }
 

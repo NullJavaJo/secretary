@@ -13,6 +13,7 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <link rel="stylesheet" href='../../css/main/main.css' />
 <link rel="stylesheet" href='../../css/main/menu.css' />
 <script src="../../js/main/main.js"></script>
@@ -68,7 +69,13 @@
 
 <script>
     function beforeLogin(){
-        alert("로그인 후 이용가능한 서비스입니다.");
+        Swal.fire({
+            icon: 'info',
+            width: 500,
+            title: '로그인이 필요한 서비스입니다!',
+            text: '',
+            footer: "<a href='/user/login'>로그인하시겠습니까?</a>"
+        })
         e.preventDefault();
     };
 </script>

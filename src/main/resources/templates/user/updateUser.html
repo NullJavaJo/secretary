@@ -245,11 +245,11 @@ $("#password-modal-open").on("click",function(){
                         contentType: "application/json",
                         //async: false,
                         success: function (response){
-                            alert(response);
+							Swal.fire(response, '', 'success')
                         }
                     });
                 }else{
-                    alert("입력하신 비밀번호가 일치하지 않습니다.")
+					Swal.fire('비밀번호가 일치하지 않습니다!', '', 'warning')
                   
                 }
 

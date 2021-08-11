@@ -97,7 +97,7 @@ var editEvent = function (event, element, view) {
             url: "/restCalendar/updateCalendar",
             data: JSON.stringify(eventData),
             success: function (response) {
-                alert('수정되었습니다.')
+                Swal.fire('수정되었습니다!', '', 'success')
                 $('#calendar').fullCalendar('removeEvents');
                 $('#calendar').fullCalendar('refetchEvents');
             }
@@ -122,7 +122,7 @@ $('#deleteEvent').on('click', function (event) {
         url: "/restCalendar/deleteCalendar",
         data: JSON.stringify(eventData),
         success: function (response) {
-            alert('삭제되었습니다.');
+            Swal.fire('삭제되었습니다!', '', 'success')
 
         }
     });

@@ -1,3 +1,10 @@
+@font-face {
+    font-family: 'MapoGoldenPier';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoGoldenPierA.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 :root {
     --sidebar-width: 250px;
     --toggler-size: 40px;
@@ -22,7 +29,7 @@ html {
 }
 
 .sidebar {
-    font-family: 'Noto Sans TC', sans-serif !important;
+    font-family: 'MapoGoldenPier';
     width: var(--sidebar-width);
     height: 100%;
     transform: translateX(calc(var(--sidebar-width) * -1));

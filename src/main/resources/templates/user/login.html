@@ -9,6 +9,7 @@
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script src="../../js/user/findPwd.js"></script>
 <script src="../../js/user/passwordCheck.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <link rel="shortcut icon" href="../../images/icon/favicon.ico" type="image/x-icon">
 <script>
     // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
@@ -17,7 +18,18 @@
     // SDK 초기화 여부를 판단합니다.
     console.log(Kakao.isInitialized());
 </script>
-
+<script th:inline="javascript">
+    document.addEventListener("DOMContentLoaded", function(){
+        var role = [[${withdrawal}]];
+            if(role === "0"){
+                Swal.fire(
+                '탈퇴한 계정입니다!',
+                '',
+                'warning'
+                )
+            }
+    });
+</script>
 <head>
     <link rel="shortcut icon" href="#">
     <meta charset="UTF-8">
@@ -27,7 +39,7 @@
 <body>
 <div id="container" style="display: block; transform: matrix(1,0,0,1,0,0); left: 0px;">
     <br/><br/>
-    <h2>login</h2>
+    <h2 class="loginTitle">login</h2>
     <span class="close-btn" id="close-btn"  onclick="back()">
         <img src="https://cdn4.iconfinder.com/data/icons/miu/22/circle_close_delete_-128.png"/>
     </span>
@@ -102,7 +114,7 @@
             <p>정보를 입력해주세요</p>
             <input type="text" id="pwdUserId" name="userId" placeholder="아이디를 입력해주세요" required/>  </br>
             <input type="email" id="pwdEmail" name="email" placeholder="이메일을 입력해주세요" required/>
-            <a id="checkEmail" value="email"  href="#" onclick=javascript:emailCheck()>인증번호 전송</a> </br><br/>
+            <a id="checkEmail" value="email"  href="#">인증번호 전송</a> </br><br/>
             <input type="text" id="certificationNo" placeholder="인증번호를 입력해주세요" required/>
             <a id="checkCertificationNo" href="#" value="certificationNo" onclick=javascript:checkCertificationNo()>인증확인</a><br/><br/>
 

@@ -23,7 +23,7 @@
 
     <insert id="likeMonologueAlarm" parameterType="com.nj.secretary.services.alarm.domain.Alarm">
         INSERT INTO ALARM(ALARM_ID, MONOLOGUE_ID, USER_ID, CHECK_STATUS, ALARM_TYPE, ALARM_TEXT)
-        VALUES(ALARM_SEQ.NEXTVAL, #{monologueId}, #{userId}, '0', '1', #{AlarmText})
+        VALUES(ALARM_SEQ.NEXTVAL, #{monologueId}, #{userId}, '0', '1', #{alarmText})
     </insert>
 
     <insert id="blindDiaryAlarm" parameterType="com.nj.secretary.services.alarm.domain.Alarm">
@@ -33,12 +33,12 @@
 
     <insert id="blindMonologueAlarm" parameterType="com.nj.secretary.services.alarm.domain.Alarm">
         INSERT INTO ALARM(ALARM_ID, MONOLOGUE_ID, USER_ID, CHECK_STATUS, ALARM_TYPE, ALARM_TEXT)
-        VALUES(ALARM_SEQ.NEXTVAL, #{monologueId}, #{userId}, '0', '2', #{AlarmText})
+        VALUES(ALARM_SEQ.NEXTVAL, #{monologueId}, #{userId}, '0', '2', #{alarmText})
     </insert>
 
     <insert id="shareLimitAlarm" parameterType="com.nj.secretary.services.alarm.domain.Alarm">
         INSERT INTO ALARM(ALARM_ID, USER_ID, CHECK_STATUS, ALARM_TYPE, ALARM_TEXT)
-        VALUES(ALARM_SEQ.NEXTVAL, #{userId}, '0', '3', #{AlarmText})
+        VALUES(ALARM_SEQ.NEXTVAL, #{userId}, '0', '3', #{alarmText})
     </insert>
 
     <select id="alarmCount" parameterType="String" resultType="Integer">

@@ -181,14 +181,19 @@ public class MonologueRestController {
     @PostMapping("monologueReport")
     public String monologueReport(@RequestBody Report report, HttpSession session) throws Exception{
     	System.out.println("monologueReport restController에서 확인===="+report);
-    	session.setAttribute("user", "gyuri");
-    	report.setReporterId((String)session.getAttribute("user"));
-    	
-    	
-    	monologueService.monologueReport(report);
-    	
-    	return "신고가 완료 되었습니다.";
-    	
+    	User user = (User)session.getAttribute("user");
+    	report.setReporterId(user.getUserId());
+    	if(monologueService.checkReporter(report) > 0){
+    	    return "이미 신고한 게시물입니다.";
+        }else{
+    	    if(monologueService.reportMonologue(report.getMonologueId())==0){
+    	        return "신고하는데 문제가 생겼습니다.";
+            }else {
+                monologueService.addReport(report);
+
+                return "신고가 완료 되었습니다.";
+            }
+        }
     }
     
 

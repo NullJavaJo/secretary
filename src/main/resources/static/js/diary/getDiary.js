@@ -72,7 +72,7 @@ $(function(){
     $("#sendReport").on("click",function(e){
 
         if($("input:checkbox[name='reason']:checked").length > 1){
-            alert("신고사유는 한가지만 선택 가능합니다.")
+            Swal.fire('신고 사유는 한가지만 선택가능합니다!', '', 'info')
         }else{
             let text = {
                 reportText : $("#textArea").val(),
@@ -85,7 +85,7 @@ $(function(){
                 data :JSON.stringify(text),
                 contentType: "application/json",
                 success: function (response){
-                    alert(response);
+                    Swal.fire(response, '', 'success')
                 }
             });
         }
@@ -104,7 +104,7 @@ $(function(){
             contentType: "application/json",
             success: function (response){
                 if($("#text").attr('name') == $("#target option:selected").val()){
-                    alert("이미 번역되었습니다.");
+                    Swal.fire('이미 번역되었습니다!', '', 'info')
                 }else{
                     $(".translatedText").remove();
                     if(JSON.parse(response).errorMessage != null){

@@ -49,5 +49,9 @@ public interface MonologueService {
 	
 	public List<Monologue> getMonologueReportReason(int monologueId);
 	
-	public void monologueReport(Report report) throws Exception;
+	public void addReport(Report report) throws Exception;
+
+	public int checkReporter(Report report);
+
+	public int reportMonologue(int monologueId);
 }

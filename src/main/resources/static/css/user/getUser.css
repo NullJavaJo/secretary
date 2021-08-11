@@ -90,7 +90,7 @@ img{
 }
 
 /* Heading */
-h2{
+.myInfo{
     font-family: 'MapoGoldenPier';
     position: relative;
     margin-top: 5px;

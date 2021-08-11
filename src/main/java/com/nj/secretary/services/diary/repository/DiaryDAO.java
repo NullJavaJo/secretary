@@ -13,11 +13,11 @@ public interface DiaryDAO {
 
     public void addDiary(Diary diary);
 
-    public List<Diary> getDiaryList(String userId) ;
+    public List<Diary> getDiaryList(Diary diary) ;
 
     public  List<Diary> getTagDiaryList(String userId);
 
-    public List<Diary> getOthersDiaryList(String userId);
+    public List<Diary> getOthersDiaryList(Diary diary);
 
     public void moveToBin(int diaryId);
 
@@ -73,4 +73,6 @@ public interface DiaryDAO {
     public int checkReporter(Report report);
 
     public void deleteThumb(int diaryId);
+
+    public void updateTag(AttachFile attachFile);
 }

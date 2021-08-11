@@ -153,8 +153,18 @@ public class MonologueDAOImpl implements MonologueDAO{
 	}
 
 	@Override
-	public void monologueReport(Report report) throws Exception {
-		sqlsession.insert("MonologueMapper.monologueReport", report);
+	public void addReport(Report report) throws Exception {
+		sqlsession.insert("MonologueMapper.addReport", report);
 		
+	}
+
+	@Override
+	public int checkReporter(Report report) {
+		return sqlsession.selectOne("MonologueMapper.checkReporter",report);
+	}
+
+	@Override
+	public int reportMonologue(int monologueId) {
+		return sqlsession.update("MonologueMapper.reportMonologue",monologueId);
 	}
 }

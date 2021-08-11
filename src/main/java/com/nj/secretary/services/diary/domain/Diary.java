@@ -36,6 +36,8 @@ public class Diary {
     private String reporterId;
     private java.util.Date reportDate;
     private String reportText;
+    private int startNum;
+    private int endNum;
 
     public Diary() { }
 

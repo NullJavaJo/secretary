@@ -38,8 +38,8 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public User findUserPwd(String userName) throws Exception {
-        return sqlSession.selectOne("UserMapper.findUserId", userName);
+    public int findUserPwd(String userId) throws Exception {
+    	return sqlSession.selectOne("UserMapper.findPwd", userId);
     }
 
     @Override
@@ -125,6 +125,11 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public void addKakaoUser(User user) throws Exception {
         sqlSession.insert("UserMapper.addKakaoUser",user);
+    }
+
+    @Override
+    public List<User> getAllUser() throws Exception {
+        return sqlSession.selectList("UserMapper.getAllUser");
     }
 
     @Override

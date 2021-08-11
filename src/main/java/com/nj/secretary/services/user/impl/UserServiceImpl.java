@@ -57,8 +57,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findUserPwd(String userName) throws Exception {
-        return userDAO.findUserPwd(userName);
+    public int findUserPwd(String userId) throws Exception {
+        return userDAO.findUserPwd(userId);
     }
 
     @Override
@@ -146,6 +146,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public void addKakaoUser(User user) throws Exception {
         userDAO.addKakaoUser(user);
+    }
+
+    @Override
+    public List<User> getAllUser() throws Exception {
+        return userDAO.getAllUser();
     }
 
     @Override

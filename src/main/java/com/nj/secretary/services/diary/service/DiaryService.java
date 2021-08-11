@@ -15,9 +15,9 @@ public interface DiaryService {
 
     public void addDiary(Diary diary);
 
-    public List<Diary> getDiaryList(String userId);
+    public List<Diary> getDiaryList(Diary diary);
 
-    public List<Diary> getOthersDiaryList(String userId);
+    public List<Diary> getOthersDiaryList(Diary diary);
 
     public Diary getDiary(int diaryNumber);
 
@@ -64,7 +64,7 @@ public interface DiaryService {
 
     public String getEmotion(int emotionId);
 
-
+    public void updateTag(AttachFile attachFile);
 
 
 

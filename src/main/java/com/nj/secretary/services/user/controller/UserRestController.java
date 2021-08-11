@@ -15,6 +15,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -36,6 +38,9 @@ public class UserRestController {
     private JavaMailSender mailSender;
     @Autowired
     private AlarmService alarmService;
+    @Autowired
+    private TemplateEngine templateEngine;
+
 
     @ResponseBody//서버로 보낸 json데이터를 자바 객체로 매핑
     @GetMapping("/idCheck")
@@ -46,8 +51,19 @@ public class UserRestController {
 
     @ResponseBody//서버로 보낸 json데이터를 자바 객체로 매핑
     @GetMapping("/emailCheck")
-    public int emailCheck(@RequestParam("email") String email) throws Exception{
-        return userService.emailCheck(email);
+    public int emailCheck(@RequestParam("email") String email,@RequestParam("userId") String userId) throws Exception{
+        User user = userService.getUser(userId);
+        System.out.print(user);
+        if(user == null){
+            return 0;
+        }else{
+            if(user.getEmail().equals(email)){
+                return 0;
+            }else{
+                return 1;
+            }
+        }
+
     }
 
     @ResponseBody
@@ -75,6 +91,7 @@ public class UserRestController {
         System.out.println(paramMap+"paramMap입니다.");
         String userName = (String) paramMap.get("userName");
         String email = (String) paramMap.get("email");
+        Context context = new Context();
         System.out.println(userName);
         System.out.println("email이 찍혀요?"+email);
         user.setUserName(userName);
@@ -91,11 +108,13 @@ public class UserRestController {
                 MimeMessage msg = mailSender.createMimeMessage();
                 MimeMessageHelper messageHelper = new MimeMessageHelper(msg, true, "UTF-8");
 
-                messageHelper.setFrom("gydms741@gmail.com", "Secretary");
-                messageHelper.setSubject(userName + "님 아이디찾기 메일입니다.");//메일 제목
-                messageHelper.setText(userName +"님의 아이디는" + userId + "입니다.");//메일 내용
+                messageHelper.setFrom("Secretary", "Secretary");
+                messageHelper.setSubject("Secretary 아이디찾기 메일입니다.");//메일 제목
                 messageHelper.setTo(email);
-                msg.setRecipients(MimeMessage.RecipientType.TO, InternetAddress.parse(email));
+                context.setVariable("key", userId);
+                String template = templateEngine.process("/main/id", context);
+                messageHelper.setText(template,true);//메일 내용
+//        msg.setRecipients(MimeMessage.RecipientType.TO, InternetAddress.parse(mail));
                 mailSender.send(msg);
             } catch (MessagingException e) {
                 System.out.println("MessagingException");
@@ -107,6 +126,27 @@ public class UserRestController {
         System.out.println("일치하는 정보 없음");
         return "0";
         //return "user/emailSuccess";
+    }
+    
+    @PostMapping("/findPwd")
+    public int findPwd(@RequestBody String userId,  @RequestBody String email,  User user, Model model) throws Exception {
+        System.out.println("userController findPwd 찾기 시작");
+       System.out.println("findPwd restController"+userId);
+        
+        //User user01=new User();
+        if(user.getUserId().equals(userId) && user.getEmail().equals(email)) {
+        	userService.findUserPwd(user.getUserId());
+        	//model.addAttribute("user", "0");
+        	return 0;
+        }else {
+        	//model.addAttribute("user", "1");
+        	return 1;
+        }
+        //진행중~~
+     
+//        System.out.println("findPwd restController"+email);
+    	//userService.findUserPwd(userName);
+        //return "user/changePwd";
     }
 
     //아이디 찾기 회원정보 일치여부
@@ -144,32 +184,42 @@ public class UserRestController {
     @PostMapping("/sendMail")
     @ResponseBody //ajax이후 다시 응답을 보내는게 아니기 때문에 적어줘야함.
     public String SendMail(@RequestParam("email") String mail) throws Exception{
-
+        MimeMessage msg = mailSender.createMimeMessage();
+        MimeMessageHelper messageHelper = new MimeMessageHelper(msg, true, "UTF-8");
         Random random = new Random();//난수 생성을 위한 랜덤 클래스
         String key=""; //인증번호
+        Context context = new Context();
+
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(mail);//스크립트에서 보낸 메일을 받을 사용자 이메일 주소
-        System.out.println("mail찍혔는지 볼게"+mail);
+
         for (int i=0; i<3; i++){
             int index = random.nextInt(25)+65;//A~Z까지 랜덤 알파벳 생성
             key+=(char)index;
         }
         int numIndex= random.nextInt(9999)+1000;//4자리 랜덤 정수를 생성
         key+=numIndex;
-        message.setFrom("gydms741@gmail.com");
-        message.setSubject("Secretary 회원가입용 인증번호입니다.");
-        message.setText("인증번호 : "+key);
-        mailSender.send(message);
+        messageHelper.setFrom("Secretary", "Secretary");
+        messageHelper.setSubject("Secretary 인증번호입니다.");//메일 제목
+        messageHelper.setTo(mail);
+        context.setVariable("key", key);
+        String template = templateEngine.process("/main/password", context);
+        messageHelper.setText(template,true);//메일 내용
+//        msg.setRecipients(MimeMessage.RecipientType.TO, InternetAddress.parse(mail));
+        mailSender.send(msg);
         return key;
     }
 
     @PostMapping("/CheckCertification")
     @ResponseBody //ajax이후 다시 응답을 보내는게 아니기 때문에 적어줘야함.
     public String SendMail01(String mail) throws Exception{
-
+        MimeMessage msg = mailSender.createMimeMessage();
+        MimeMessageHelper messageHelper = new MimeMessageHelper(msg, true, "UTF-8");
         Random random = new Random();//난수 생성을 위한 랜덤 클래스
         String key=""; //인증번호
+        Context context = new Context();
+
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(mail);//스크립트에서 보낸 메일을 받을 사용자 이메일 주소
@@ -180,9 +230,15 @@ public class UserRestController {
         }
         int numIndex= random.nextInt(9999)+1000;//4자리 랜덤 정수를 생성
         key+=numIndex;
-        message.setSubject("Secretary 비밀번호찾기 인증번호입니다.");
-        message.setText("인증번호 : "+key);
-        mailSender.send(message);
+        messageHelper.setFrom("Secretary", "Secretary");
+        messageHelper.setSubject("Secretary 비밀번호찾기 인증번호입니다.");//메일 제목
+        messageHelper.setTo(mail);
+
+        context.setVariable("key", key);
+        String template = templateEngine.process("/main/mailTemplate", context);
+        messageHelper.setText(template,true);//메일 내용
+//        msg.setRecipients(MimeMessage.RecipientType.TO, InternetAddress.parse(mail));
+        mailSender.send(msg);
         return key;
     }
 
@@ -299,6 +355,7 @@ public class UserRestController {
     	
     	
     	System.out.println("withdrawal restController 시작합니다");
+        System.out.println(user);
     	userService.withdrawal(user);
 
     	return "";
@@ -306,12 +363,15 @@ public class UserRestController {
     
     
     @PostMapping("withdrawalReason")
-    public String withdrawalReason(@RequestBody User user) throws Exception {
+    public String withdrawalReason(@RequestBody User user,HttpSession session) throws Exception {
     	//user.setWithdrawalReasonId(withdrawalReasonId);
     	userService.withdrawalReason(user);
-    	    	
+    	session.invalidate();
     	System.out.println("restController에서 탈퇴사유 확이이이인::::"+user);
     	return "탈퇴가 완료 되었습니다.";
     	
     }
+
+
+
 }

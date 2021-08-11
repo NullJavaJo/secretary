@@ -12,7 +12,6 @@ $(document).ready(function() {
         callbacks: {
             onImageUpload: function (files, editor, welEditable) {
 
-                console.log('image upload:', files);
 
                 // sendFile(files[0], this);
                 for(var i = files.length - 1; i>=0; i--){
@@ -37,8 +36,6 @@ $(document).ready(function() {
             processData: false,
             success: function(data) {
                 $("#summernote").summernote("insertImage",data.url);
-                alert(data.url);
-                console.log("console : "+data.url);
                 // $('.note-editable').append("<p><img src='"+data.url+"' width='90px' height='auto'/></p><br/>");
                 $('#summernote').summernote('insertNode', data.url);
                 // $('.note-editable').reload();
@@ -159,22 +156,26 @@ function goWrite(frm) {
     var content = frm.summernote.value;
     var tag = $("#frm input[type=text]")
     if (title.trim() == ''){
-        alert("제목을 입력해주세요");
+        Swal.fire('제목을 입력해주세요!', '', 'info')
         return false;
     }$.trim($('#tagText').val())
     for(var i =0; i < tag.length; i++){
         if(""==$.trim((tag[i]).val())||null==$.trim((tag[i]).val())){
-            alert("태그를 입력해주세요");
+            Swal.fire('태그를 입력해주세요!', '', 'info')
             return false;
         }
 
+    }
+    if(title.length > 20){
+        Swal.fire('제목이 너무 길어요!', '', 'warning')
+        return false;
     }
     // if (tag.trim() == ''){
     //     alert("태그를 입력해주세요");
     //     return false;
     // }
     if (content.trim() == ''){
-        alert("내용을 입력해주세요");
+        Swal.fire('내용을 입력해주세요!', '', 'warning')
         return false;
     }else{
         frm.submit();

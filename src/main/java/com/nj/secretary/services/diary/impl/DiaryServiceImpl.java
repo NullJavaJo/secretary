@@ -29,9 +29,9 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public List<Diary> getDiaryList(String userId) {
+    public List<Diary> getDiaryList(Diary diary) {
         System.out.println("getDiaryList in DiaryServiceImpl start");
-        List<Diary> list = diaryDAO.getDiaryList(userId);
+        List<Diary> list = diaryDAO.getDiaryList(diary);
 
         Map<String, Object> map = new HashMap<>();
         map.put("list", list);
@@ -53,9 +53,9 @@ public class DiaryServiceImpl implements DiaryService {
 
 
     @Override
-    public List<Diary> getOthersDiaryList(String userId) {
+    public List<Diary> getOthersDiaryList(Diary diary) {
 
-        List<Diary> list = diaryDAO.getOthersDiaryList(userId);
+        List<Diary> list = diaryDAO.getOthersDiaryList(diary);
         return list;
     }
 
@@ -205,5 +205,10 @@ public class DiaryServiceImpl implements DiaryService {
     @Override
     public String getEmotion(int emotionId) {
         return diaryDAO.getEmotion(emotionId);
+    }
+
+    @Override
+    public void updateTag(AttachFile attachFile) {
+        diaryDAO.updateTag(attachFile);
     }
 }

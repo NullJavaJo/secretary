@@ -218,13 +218,15 @@ public class MonologueController {
 		User user=(User)session.getAttribute("user");
 		
 		System.out.println("getMonologue에서 user 확인 :::  "+user);
-		if(user.getUserId().equals(monologueService.getMonologue(monologueId).getUserId())) {
+		if(user.getUserId().equals(monologueService.getMonologue(monologueId).getUserId())) { //본인
 			System.out.println(user.getUserId());
 			System.out.println(monologueService.getMonologue(monologueId).getUserId());
 			model.addAttribute("user", "0");
-		}else {
+		}else {	//타인
 			model.addAttribute("user", "1");
 		}
+
+		model.addAttribute("role", user.getRoles());
 		
 		Monologue monologue=monologueService.getMonologue(monologueId);
 		
@@ -259,6 +261,17 @@ public class MonologueController {
 		
 		System.out.println("monologueController deleteMonologue  ::  "+monologueList02);
 		
+		return "monologue/getMonologueList";
+	}
+
+	@PostMapping("deleteMonologue")
+	public String deleteMonologue(HttpSession session,Model model,@ModelAttribute Monologue monologue) throws Exception {
+		User user = (User)session.getAttribute("user");
+		monologueService.deleteMonologue(monologue.getMonologueId());
+		List<Monologue> monologueList=monologueService.getMonologueList(user.getUserId());
+		model.addAttribute("monologueList", monologueList);
+		model.addAttribute("user", user);
+
 		return "monologue/getMonologueList";
 	}
 
@@ -298,7 +311,6 @@ public class MonologueController {
 	@PostMapping("updateMonologue")
 	public String updateMonologue(Monologue monologue, Model model) throws Exception{
 		
-		monologue.getShareStatus();
 		System.out.println(monologue);
 		if(monologue.getShareStatus().trim().equals("0,1")||monologue.getShareStatus().trim().equals("1,1")) {
 			monologue.setShareStatus("1");
@@ -307,7 +319,7 @@ public class MonologueController {
 		}
 		
 		monologueService.updateMonologue(monologue);
-		
+		model.addAttribute("monologue",monologue);
 		System.out.println("updateMonologue 확인합니다" +monologue);
 		
 		return "monologue/getMonologue";

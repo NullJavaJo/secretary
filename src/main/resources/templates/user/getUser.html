@@ -14,7 +14,7 @@
 	<script src="../../js/main/menu.js"></script>
 	<script src="https://use.fontawesome.com/b51c131c86.js"></script>
 	<link rel="shortcut icon" href="../../images/icon/favicon.ico" type="image/x-icon">
-
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 	<title>My Profile</title>
  
  <script>
@@ -38,7 +38,7 @@ $("#changeUser").on("click",function(){
                             if(check==0){
                                   	$("#updateUser").submit();
                                   }else{
-                            	alert("비밀번호가 일치하지 않습니다.")
+								Swal.fire('비밀번호가 일치하지 않습니다!', '', 'warning')
                                   }
                             }
                     });
@@ -64,7 +64,7 @@ $("#changeUser").on("click",function(){
 <div id="container" style="display: block; transform: matrix(1,0,0,1,0,0); left: 0px;">
 <br>
 
-	<h2> 내 정보 보기</h2>
+	<h2 class="myInfo"> 내 정보 보기</h2>
 	<span class="close-btn" id="close-btn"  onclick="back()">
         <img src="https://cdn4.iconfinder.com/data/icons/miu/22/circle_close_delete_-128.png"/>
     </span>

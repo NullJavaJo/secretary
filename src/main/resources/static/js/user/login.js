@@ -14,11 +14,13 @@ function loginValiCheck(){
                 )},
         contentType: "application/json",
         success: function (data){
-            console.log("로그인 가능합니다"+data);
             if (data == 0){
                 $('#message').remove();
                 $('.check_font').append("<div id='message'>가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.</div>")
-                $('.check_font').css("color","#ae0f11")
+                $('.check_font').css({
+                    color:"rgb(243 55 58)",
+                    textAlign:"center"
+                })
                 $('#login').preventDefault();
                 return false;
             }else{
@@ -56,41 +58,12 @@ $(function() {
     $('#findId').on("click", function () {
         $("#findId-modal").modal("show");
     })
-    $("#sendEmail").on("click",function(e){
-        let text = {
-            userName : $("#userName").val(),
-            email : $("#email").val()
-        };
-        $.ajax({
-            url: "/restUser/findId",
-            type: "POST",
-            data: JSON.stringify(text),
-            contentType: "application/json",
-            success: function (response) {
-                alert(response);
-                if (response==="0"){
-                    $('.check_info').append("<div id='message'>회원정보가 일치하지 않습니다.</div>")
-                    $('.check_info').css("color", "#ae0f11")
-                    $('#sendEmail').preventDefault();
-                } else {
-                    $('#message').remove();
-                    alert("이메일이 전송되었습니다.")
-                }
-            }, error: function () {
-                console.log("실패실패");
-            }
-        })
 
-    })
-
-})
-
-
-$(function() {
     $('#findPwd').on("click", function () {
         $("#findPwd-modal").modal("show");
     })
-    $("#sendEmail").on("click",function(e){
+
+    $("#sendEmail").on("click",function(){
         let text = {
             userName : $("#userName").val(),
             email : $("#email").val()
@@ -101,26 +74,26 @@ $(function() {
             data: JSON.stringify(text),
             contentType: "application/json",
             success: function (response) {
-                alert(response);
                 if (response==="0"){
+                    $('#message').remove();
                     $('.check_info').append("<div id='message'>회원정보가 일치하지 않습니다.</div>")
                     $('.check_info').css("color", "#ae0f11")
-                    $('#sendEmail').preventDefault();
+
                 } else {
                     $('#message').remove();
-                    alert("이메일이 전송되었습니다.")
+                    Swal.fire('이메일이 전송되었습니다!', '', 'success')
                 }
             }, error: function () {
                 console.log("실패실패");
-                alert(response);
-
             }
         })
 
     })
 
 })
+
 
 function back(){
     history.go(-1);
 }
+

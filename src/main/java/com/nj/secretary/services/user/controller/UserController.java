@@ -17,6 +17,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
@@ -44,11 +46,13 @@ public class UserController {
     @Autowired
     private MonologueService monologueService;
 
+
     @GetMapping("/signUp")
     public String signUp() throws Exception {
 
         return "user/addUser";
     }
+
 
     @PostMapping("signUp")
     public String signUp01(@Valid User user, Errors errors, Model model) throws Exception {
@@ -135,6 +139,7 @@ public class UserController {
         Random random = new Random();
         System.out.println(user + " : " + monologue);
         if(userService.getUser(user.getUserId())==null){ //탈퇴아이디 로그인 x
+            model.addAttribute("withdrawal","0");
             return "/user/login";
         }
         System.out.println("count : " + monologueService.checkMonologue(dbUser.getUserId()));
@@ -243,11 +248,26 @@ public class UserController {
         return "user/findPwd";
     }
 
-    @PostMapping("/findPwd")
-    public String findPwd01(String userName) throws Exception {
-        userService.findUserPwd(userName);
-        return "user/changePwd";
-    }
+//    @PostMapping("/findPwd")
+//    public String findPwd01(String userId, String email,@ModelAttribute User user, Model model) throws Exception {
+//        System.out.println("userController findPwd 찾기 시작");
+//        //User user01=new User();
+//        userService.findUserPwd(user.getUserId());
+//        if(user.getUserId().equals(userId)) {
+//        	model.addAttribute("user", "0");
+//        }else {
+//        	model.addAttribute("user", "1");
+//        }
+//        
+//        if(user.getEmail().equals(email)) {
+//        	model.addAttribute("user", "3");
+//        }else {
+//        	model.addAttribute("user", "4");
+//        }
+//    	
+//    	//userService.findUserPwd(userName);
+//        return "user/changePwd";
+//    }
 
 
     @GetMapping("/kakaologin")
@@ -406,8 +426,8 @@ public class UserController {
         session.setAttribute("user",user);
         Monologue monologue = new Monologue();
         monologue.setUserId(user.getUserId());
-        monologue.setQuestionId(1);
-        model.addAttribute("question", monologueService.getQuestionText(1));
+        monologue.setQuestionId(7);
+        model.addAttribute("question", monologueService.getQuestionText(7));
 
         return "user/afterLogin";
     }
@@ -504,6 +524,22 @@ public class UserController {
     	System.out.println("withdrawal controller 시작 합니다");
     	
     	return "user/withdrawal";
+
+    }
+
+    @GetMapping("getAllUser")
+    public String getAllUser(HttpSession session,Model model) throws Exception{
+        User user = (User)session.getAttribute("user");
+        User user01 = userService.getUser(user.getUserId());
+        System.out.println(user +" : "+user01);
+        if(user01.getRoles().equals("ADMIN")){
+            List list = userService.getAllUser();
+            System.out.println("ALLUSER : "+list);
+            model.addAttribute("user",list);
+            return "user/getAllUser";
+        }else{
+            return "user/login";
+        }
 
     }
     

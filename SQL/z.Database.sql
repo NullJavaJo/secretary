@@ -29,7 +29,7 @@ DROP sequence WEATHER_SEQ;
 
 
 CREATE SEQUENCE diary_seq START WITH 1 INCREMENT BY 1;
-CREATE SEQUENCE monologue_seq START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE monologue_seq START WITH 100 INCREMENT BY 1;
 CREATE SEQUENCE calendar_seq START WITH 1 INCREMENT BY 1;
 CREATE SEQUENCE goal_seq START WITH 1 INCREMENT BY 1;
 CREATE SEQUENCE alarm_seq START WITH 1 INCREMENT BY 1;
@@ -44,22 +44,6 @@ CREATE SEQUENCE image_seq START WITH 1 INCREMENT BY 1;
 CREATE SEQUENCE like_seq START WITH 1 INCREMENT BY 1;
 
 
-INSERT INTO EMOTIONS (EMOTION_ID, EMOTION_NAME, EMOTION_IMG) VALUES (1, '기쁨', '/images/emotions/really.png');
-INSERT INTO EMOTIONS (EMOTION_ID, EMOTION_NAME, EMOTION_IMG) VALUES (2, '슬픔', '/images/emotions/sad.png');
-INSERT INTO EMOTIONS (EMOTION_ID, EMOTION_NAME, EMOTION_IMG) VALUES (3, '화남', '/images/emotions/angry.png');
-INSERT INTO EMOTIONS (EMOTION_ID, EMOTION_NAME, EMOTION_IMG) VALUES (4, '사랑', '/images/emotions/love.png');
-INSERT INTO EMOTIONS (EMOTION_ID, EMOTION_NAME, EMOTION_IMG) VALUES (5, '심각', '/images/emotions/disappoint.png');
-INSERT INTO EMOTIONS (EMOTION_ID, EMOTION_NAME, EMOTION_IMG) VALUES (6, '핑크', '/images/emotions/pink.png');
-INSERT INTO EMOTIONS (EMOTION_ID, EMOTION_NAME, EMOTION_IMG) VALUES (7, '그냥그럼', '/images/emotions/soso.png');
-INSERT INTO EMOTIONS (EMOTION_ID, EMOTION_NAME, EMOTION_IMG) VALUES (8, '아주좋음', '/images/emotions/very smile.png');
-INSERT INTO EMOTIONS (EMOTION_ID, EMOTION_NAME, EMOTION_IMG) VALUES (9, '조금 핑크', '/images/emotions/little pink.png');
-INSERT INTO EMOTIONS (EMOTION_ID, EMOTION_NAME, EMOTION_IMG) VALUES (10, '좋아요', '/images/emotions/goooood.png');
-INSERT INTO EMOTIONS (EMOTION_ID, EMOTION_NAME, EMOTION_IMG) VALUES (11, '죽음', '/images/emotions/dead.png');
-INSERT INTO EMOTIONS (EMOTION_ID, EMOTION_NAME, EMOTION_IMG) VALUES (12, '아픔', '/images/emotions/sick.png');
-INSERT INTO EMOTIONS (EMOTION_ID, EMOTION_NAME, EMOTION_IMG) VALUES (13, '뭐야', '/images/emotions/wtf.png');
-INSERT INTO EMOTIONS (EMOTION_ID, EMOTION_NAME, EMOTION_IMG) VALUES (14, '걱정', '/images/emotions/worry.png');
-INSERT INTO EMOTIONS (EMOTION_ID, EMOTION_NAME, EMOTION_IMG) VALUES (15, '놀람', '/images/emotions/surprise.png');
-INSERT INTO EMOTIONS (EMOTION_ID, EMOTION_NAME, EMOTION_IMG) VALUES (16, '무표정', '/images/emotions/nothing.png');
 
 
 
@@ -81,7 +65,7 @@ create table Image
         primary key,
     DIARY_ID   NUMBER(8),
     IMAGE_NAME VARCHAR2(100)
-)
+);
 
 create table LIKES
 (
@@ -91,7 +75,7 @@ create table LIKES
     DIARY_ID     NUMBER(8),
     MONOLOGUE_ID NUMBER(8),
     LIKER_ID     VARCHAR2(30)
-)
+);
 
 
 create table USERS
@@ -116,7 +100,7 @@ create table USERS
     IS_DISPLAY_WEATHER   CHAR         default 1,
     IS_DISPLAY_LOCATION  CHAR         default 1,
     KAKAO                NUMBER       default 0
-)
+);
 
 CREATE TABLE DIARY
 (
@@ -153,7 +137,7 @@ create table CALENDAR
     BACKGROUND_COLOR VARCHAR2(10),
     ALL_DAY          CHAR default null,
     IMAGE_URL        VARCHAR2(50)
-)
+);
 
 
 CREATE TABLE MONOLOGUE
@@ -239,6 +223,23 @@ CREATE TABLE WEATHER
     WEATHER_NAME	VARCHAR2(20)	NOT NULL,
     WEATHER_IMG	VARCHAR2(100)	NOT NULL
 );
+
+INSERT INTO EMOTIONS (EMOTION_ID, EMOTION_NAME, EMOTION_IMG) VALUES (1, '기쁨', '/images/emotions/really.png');
+INSERT INTO EMOTIONS (EMOTION_ID, EMOTION_NAME, EMOTION_IMG) VALUES (2, '슬픔', '/images/emotions/sad.png');
+INSERT INTO EMOTIONS (EMOTION_ID, EMOTION_NAME, EMOTION_IMG) VALUES (3, '화남', '/images/emotions/angry.png');
+INSERT INTO EMOTIONS (EMOTION_ID, EMOTION_NAME, EMOTION_IMG) VALUES (4, '사랑', '/images/emotions/love.png');
+INSERT INTO EMOTIONS (EMOTION_ID, EMOTION_NAME, EMOTION_IMG) VALUES (5, '심각', '/images/emotions/disappoint.png');
+INSERT INTO EMOTIONS (EMOTION_ID, EMOTION_NAME, EMOTION_IMG) VALUES (6, '핑크', '/images/emotions/pink.png');
+INSERT INTO EMOTIONS (EMOTION_ID, EMOTION_NAME, EMOTION_IMG) VALUES (7, '그냥그럼', '/images/emotions/soso.png');
+INSERT INTO EMOTIONS (EMOTION_ID, EMOTION_NAME, EMOTION_IMG) VALUES (8, '아주좋음', '/images/emotions/very smile.png');
+INSERT INTO EMOTIONS (EMOTION_ID, EMOTION_NAME, EMOTION_IMG) VALUES (9, '조금 핑크', '/images/emotions/little pink.png');
+INSERT INTO EMOTIONS (EMOTION_ID, EMOTION_NAME, EMOTION_IMG) VALUES (10, '좋아요', '/images/emotions/goooood.png');
+INSERT INTO EMOTIONS (EMOTION_ID, EMOTION_NAME, EMOTION_IMG) VALUES (11, '죽음', '/images/emotions/dead.png');
+INSERT INTO EMOTIONS (EMOTION_ID, EMOTION_NAME, EMOTION_IMG) VALUES (12, '아픔', '/images/emotions/sick.png');
+INSERT INTO EMOTIONS (EMOTION_ID, EMOTION_NAME, EMOTION_IMG) VALUES (13, '뭐야', '/images/emotions/wtf.png');
+INSERT INTO EMOTIONS (EMOTION_ID, EMOTION_NAME, EMOTION_IMG) VALUES (14, '걱정', '/images/emotions/worry.png');
+INSERT INTO EMOTIONS (EMOTION_ID, EMOTION_NAME, EMOTION_IMG) VALUES (15, '놀람', '/images/emotions/surprise.png');
+INSERT INTO EMOTIONS (EMOTION_ID, EMOTION_NAME, EMOTION_IMG) VALUES (16, '무표정', '/images/emotions/nothing.png');
 
 
 회원관리

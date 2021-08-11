@@ -54,17 +54,16 @@
 
     </insert>
 
-    <select id="getDiaryList" resultMap="diaryServiceMap" parameterType="String">
-
-        SELECT d.DIARY_TITLE,d.DIARY_ID,d.LOCATION,d.WEATHER,d.DIARY_DATE,a.IMAGE_NAME,d.DIARY_TEXT, d.SHARE_STATUS FROM DIARY d, IMAGE a
-        WHERE d.user_id = #{value} AND d.delete_status = 0 and d.DIARY_ID = a.DIARY_ID(+)
-        ORDER BY d.diary_date desc
+    <select id="getDiaryList" resultMap="diaryServiceMap" parameterType="com.nj.secretary.services.diary.domain.Diary">
+        SELECT * FROM (SELECT ROWNUM rnum , x.* from (SELECT d.DIARY_TITLE,d.DIARY_ID,d.LOCATION,d.WEATHER,d.DIARY_DATE,a.IMAGE_NAME,d.DIARY_TEXT, d.SHARE_STATUS FROM DIARY d, IMAGE a
+                                                      WHERE d.user_id = #{userId} AND d.delete_status = 0 and d.DIARY_ID = a.DIARY_ID(+)
+                                                      ORDER BY d.diary_date desc) x) h WHERE rnum between #{startNum} and #{endNum}
     </select>
 
-    <select id="getOthersDiaryList" resultMap="diaryServiceMap" parameterType="String">
-        SELECT d.DIARY_TITLE,d.DIARY_ID,d.LOCATION,d.WEATHER,d.DIARY_DATE,a.IMAGE_NAME,d.DIARY_TEXT, d.SHARE_STATUS FROM DIARY d, IMAGE a
-        WHERE d.user_id != #{userId} AND d.delete_status = 0 and d.DIARY_ID = a.DIARY_ID(+) and share_status= 1
-        ORDER BY d.diary_date desc
+    <select id="getOthersDiaryList" resultMap="diaryServiceMap" parameterType="com.nj.secretary.services.diary.domain.Diary">
+        SELECT * FROM (SELECT ROWNUM rnum , x.* from (SELECT d.DIARY_TITLE,d.DIARY_ID,d.LOCATION,d.WEATHER,d.DIARY_DATE,a.IMAGE_NAME,d.DIARY_TEXT, d.SHARE_STATUS FROM DIARY d, IMAGE a
+                                                      WHERE d.user_id != #{userId} AND d.delete_status = 0 and d.DIARY_ID = a.DIARY_ID(+) and d.SHARE_STATUS = 1
+                                                      ORDER BY d.diary_date desc) x) h WHERE rnum between #{startNum} and #{endNum}
     </select>
 
     <update id="moveToBin" parameterType="integer">
@@ -92,6 +91,11 @@
     <insert id="addTag" parameterType="String">
         INSERT INTO AttachFile(file_id, diary_id, file_name, file_status)
         VALUES(attachfile_seq.nextval, diary_seq.currval, #{value}, '0')
+    </insert>
+
+    <insert id="updateTag" parameterType="com.nj.secretary.services.diary.domain.AttachFile">
+        INSERT INTO AttachFile(file_id, diary_id, file_name, file_status)
+        VALUES(attachfile_seq.nextval, #{diaryId}, #{fileName}, '0')
     </insert>
 
     <insert id="addImage" parameterType="com.nj.secretary.services.diary.domain.Diary">
@@ -124,12 +128,12 @@
         {
             CALL
             BEGIN
-            UPDATE (SELECT d.diary_id AS diary_id, u.user_id AS user_id, u.blind_count AS blind_count, d.blind_status AS blind_status
+            UPDATE (SELECT d.diary_id AS diary_id, u.user_id AS user_id, u.blind_count AS blind_count, d.blind_status AS blind_status, d.share_status AS share_status
             FROM diary d, users u
             WHERE d.user_id = u.user_id AND d.diary_id = #{value}) d
-            SET d.blind_status = '1';
+            SET d.blind_status = '1', d.share_status = '0';
             MERGE INTO users u
-            USING (SELECT d.diary_id AS diary_id, u.user_id AS user_id, u.blind_count AS blind_count, d.blind_status AS blind_status
+            USING (SELECT d.diary_id AS diary_id, u.user_id AS user_id, u.blind_count AS blind_count, d.blind_status AS blind_status, d.share_status AS share_status
             FROM diary d, users u
             WHERE d.user_id = u.user_id AND d.diary_id = #{value}) d
             ON (u.user_id = d.user_id)

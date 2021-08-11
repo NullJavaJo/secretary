@@ -35,7 +35,6 @@ $('#play-next').click(function() {
 
 //Alarm
 function getAlarmList(){
-    alert("종알람 리스트 가져옴");
     $.ajax({
         url : "/restAlarm/getAlarmList",
         method : "GET",
@@ -44,12 +43,10 @@ function getAlarmList(){
         success : function(alarmList) {
             console.log(alarmList);
             if (document.getElementById('deleteAlarmList')) {
-                alert("지우기 있음")
                 document.querySelector('#alarmLi span').remove();
                 document.querySelector('#alarmLi li').remove();
                 $('#alarmLi li,#alarmLi span').remove();
             } else {
-                alert("지우기 없음")
                 $('#alarmLi li,#alarmLi span').remove();
                 $('#alarmLi').css("display", "none");
                 $('#alarmLi').fadeIn(1000);
@@ -77,7 +74,6 @@ function getAlarmList(){
 };
 
 $(document).on("click", "#getDiary", function (){
-    alert("getDiary");
     $.ajax({
         url : "/restAlarm/seenDiaryAlarm",
         method : "POST",
@@ -91,7 +87,6 @@ $(document).on("click", "#getDiary", function (){
 });
 
 $(document).on("click", "#getMonologue", function (){
-    alert("getMonologue");
     $.ajax({
         url : "/restAlarm/seenMonologueAlarm",
         method : "POST",
@@ -107,20 +102,37 @@ $(document).on("click", "#getMonologue", function (){
 
 $(document).on("click", "#deleteAlarmList", function (){
     const id = $('#getLimitReasons').attr('value');
-    alert("알림 목록을 전부 지우시겠습니까?");
-    alert(id);
-    if(id != null) {
-        $.ajax({
-            url : "/restAlarm/deleteAlarmList",
-            method : "POST",
-            dataType : "json",
-            data : {userId:$('#getLimitReasons').attr('value')},
-            success :
-                getAlarmList()
-        });
-    }else{
-        alert("지울 항목이 없습니다")
-    }
+    Swal.fire({
+        title: '목록을 전부 지우시겠습니까?',
+        text: "",
+        icon: 'info',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url : "/restAlarm/deleteAlarmList",
+                method : "POST",
+                dataType : "json",
+                data : {userId:$('#getLimitReasons').attr('value')},
+                success :
+                    getAlarmList()
+            });
+            Swal.fire(
+                '삭제되었습니다!',
+                '',
+                'success'
+            )
+        }else{
+            Swal.fire(
+                '지울 항목이 없습니다!',
+                '',
+                'info'
+            )
+        }
+    })
 });
 
 function modal(id) {
@@ -339,7 +351,6 @@ $(function(){
         };
         if (event.keyCode === 13){
             if (!event.shiftKey){
-                // alert("enter");
                 console.log(monologue);
                 event.preventDefault();
                 $.ajax({

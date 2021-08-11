@@ -4,13 +4,13 @@
   
 <head>
 <meta charset="UTF-8">
-<title>1문1답보기</title>
+<title>1문1답 보기</title>
     <link rel="shortcut icon" href="../../images/icon/favicon.ico" type="image/x-icon">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Stylish&display=swap" rel="stylesheet">
-    
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <link rel="stylesheet" href='../../css/monologue/getMonologue.css' />
     <script src="../../js/monologue/getMonologue.js"></script>
 
@@ -19,18 +19,40 @@
     <script src="../../js/main/main.js"></script>
 
 
-   <script>
-   
-$(function(){
-	   var check =[[${user}]];
-	   if(check=='0'){
-		   $("#modifyMonologue").show();
-	   }else if(check=='1'){
-		   $("#reportModal").show();
-	   }
-   });
-   </script>
 
+    <script th:inline="javascript">
+        document.addEventListener("DOMContentLoaded", function(){
+            var role = [[${role}]];
+            var user = [[${user}]];
+            console.log("role : "+role);
+            console.log("user : "+user);
+            if(role == "ADMIN"){
+                //alert("admin이다! admin이 나타났다~!!");
+                $("#forAdmin").append(
+                    // "<a href='#' id='back' onclick='back()'>	확인</a>"
+                )
+            } else{
+                if(user === '0'){
+
+                    $("#modifyMonologue").show();
+                    $("#deleteMonologue").show();
+                    $("#reportModal").remove();
+                }else if(user==='1'){
+                    $("#modifyMonologue").remove();
+                    $("#deleteMonologue").remove();
+                    $("#reportModal").show();
+                }else if(user==='2'){
+                    $("#like").remove();
+                    $("#report").remove();
+                    $("#delete").remove();
+                    $("#modifyDiary").remove();
+                }
+            }
+
+
+        });
+
+    </script>
 </head>
 
 
@@ -51,8 +73,13 @@ $(function(){
     contentType: "application/json",
     success: function (response){
      if($("#text").attr('name') == $("#target option:selected").val()){
-      alert("이미 번역되었습니다.");
+         Swal.fire('이미 번역되었습니다!', '', 'info')
      }else{
+         $(".translatedMonologue").remove();
+         if(JSON.parse(response).errorMessage != null){
+             $("#text").attr('name',"");
+             return;
+         }
       $(".translatedMonologue").remove();
       $("#text").append("<div class='translatedMonologue'>"+JSON.parse(response).message.result.translatedText+"</div> ");
       $("#text").attr('name',$("#target option:selected").val());
@@ -67,8 +94,13 @@ $(function(){
     contentType: "application/json",
     success: function (response){
      if($("#questionText").attr('name') == $("#target option:selected").val()){
-      alert("이미 번역되었습니다.");
+         Swal.fire('이미 번역되었습니다!', '', 'info')
      }else{
+         $(".translatedQuestion").remove();
+         if(JSON.parse(response).errorMessage != null){
+             $("#questionText").attr('name',"");
+             return;
+         }
       $(".translatedQuestion").remove();
       $("#questionText").append("<div class='translatedQuestion'>"+JSON.parse(response).message.result.translatedText+"</div> ");
       $("#questionText").attr('name',$("#target option:selected").val());
@@ -86,11 +118,14 @@ $(function(){
             $("#reportModal").on("click",function(){
                 $("#eventModal").modal("show");
             })
+            $("#commit").on("click",function(){
+                location.href="/monologue/getMonologueList"
+            })
 
             $("#send").on("click",function(e){
 
                 if($("input:checkbox[name='reason']:checked").length > 1){
-                    alert("신고사유는 한가지만 선택 가능합니다.")
+                    Swal.fire('신고 사유는 한가지만 선택 가능합니다!', '', 'warning')
                 }else{
                     let text = {
                        reportText : $("#textArea").val(),
@@ -104,21 +139,41 @@ $(function(){
                         data :JSON.stringify(text),
                         contentType: "application/json",
                         success: function (response){
-                            alert(response);
+                            Swal.fire(response, '', 'success').then((result) => {
+                                if (result.isConfirmed) {
+                                    location.href="/monologue/getMonologueList"
+                                }
+                            })
+
                         }
                     });
                 }
 
             })
-    
+
+            $("#deleteMonologue").on("click",function(){
+                Swal.fire({
+                    title: '삭제하시겠습니까?',
+                    text: "다시 복구할 수 없습니다!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: '삭제'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire(
+                            '삭제되었습니다!',
+                            '',
+                            'success'
+                        )
+                        $("form").attr("action","/monologue/deleteMonologue").attr("method","post").submit();
+                    }
+                })
+            })
         });
     
-    
-    
    </script>
-
-   
-   
    
 <body>
 
@@ -133,10 +188,12 @@ $(function(){
 <input type="hidden" th:value="${monologue.questionId}" name="questionId"/>
 <input type="hidden" th:value="${monologue.userId}" name="userId"/>
 
-
+    <img th:if="${monologue.shareStatus}==1" src="../../images/icon/diary/share-alt-solid.svg" style="width: 2%; margin-left: 85%; margin-bottom: 1%">
     <div class="container">
 
         <div id="questionText" th:text="${monologue.questionText}"/>
+
+
         <div id="image"></div>
         <div class="text" id="text" name="0" th:utext="${monologue.monologueText}">1답 내용입니다.</div>
         <div></div>
@@ -162,15 +219,20 @@ $(function(){
                 <option value="zh-TW">중국어-번체</option>
             </select>
             <img class="translate" src="../../images/icon/translateIcon.png" width="25px" height="25px" style="cursor: pointer">
-       <br>  <input type="submit" id="modifyMonologue" style="display:none;" value="&#128214; 수정">
+            <br>
+
         </div>
+
          <!-- <input type="submit" id="modifyMonologue" style="display:none;" value="&#128214; 수정"> -->
     </div>
-
+    <input type="submit" id="modifyMonologue" value="수정">
+    <input type="button"  id="deleteMonologue" value="삭제">
+    <input type="button"  id="commit" value="확인">
+    <button type="button" id="reportModal" style="display:none;" >&#128680; 신고하기</button>
 </form>
 
 
-        <button type="button" id="reportModal" style="display:none;" >&#128680; 신고하기</button>
+
 
 
 <div class="modal fade" tabindex="-1" role="dialog" id="eventModal">
@@ -188,12 +250,12 @@ $(function(){
                     <div class="col-xs-12">
                         <label class="cdl-xs-12">사유 선택</label>
                         <div class="col-xs-4">
-                             <label>●성적인 컨텐츠<input type="checkbox" name="reason" value="1"> </label> 
-                      <label>●폭력적 또는 혐오스러운 컨텐츠<input type="checkbox" name="reason" value="2"></label>       
-                      <label>●증오 또는 악의적인 컨텐츠<input type="checkbox" name="reason" value="3"></label>       
-                      <label>●유해하거나 위험한 행위 <input type="checkbox" name="reason" value="4"></label>       
-                      <label>●스팸 또는 오해의 소재가 있는 컨텐츠<input type="checkbox" name="reason" value="5"></label>       
-                      <label>●권리침해 <input type="checkbox" name="reason" value="6"></label>       
+                             <label>●성적인 컨텐츠<input type="checkbox" name="reason" value="1"> </label> <br>
+                      <label>●폭력적 또는 혐오스러운 컨텐츠<input type="checkbox" name="reason" value="2"></label>  <br>
+                      <label>●증오 또는 악의적인 컨텐츠<input type="checkbox" name="reason" value="3"></label>     <br>
+                      <label>●유해하거나 위험한 행위 <input type="checkbox" name="reason" value="4"></label>     <br>
+                      <label>●스팸 또는 오해의 소재가 있는 컨텐츠<input type="checkbox" name="reason" value="5"></label>  <br>
+                      <label>●권리침해 <input type="checkbox" name="reason" value="6"></label>       <br>
                       <label>●기타 <input type="checkbox" name="reason" value="7"></label>
                         </div>
                         <textarea id="textArea" class="col-xs-8" rows="8" cols="100"></textarea>

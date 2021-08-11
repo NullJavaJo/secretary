@@ -33,7 +33,7 @@ public interface UserService{
     public int userInfoCheck(User user) throws Exception;
 
 
-    public User findUserPwd(String userName) throws Exception;
+    public int findUserPwd(String userId) throws Exception;
 
 
     public int loginCheck(User user) throws Exception;
@@ -84,4 +84,6 @@ public interface UserService{
     public List<User> getWithdrawalReasonList();
 
     void addKakaoUser(User user) throws Exception;
+
+    public List<User> getAllUser() throws Exception;
 }

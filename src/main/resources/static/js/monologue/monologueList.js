@@ -176,7 +176,7 @@ $(function deleteMonologue(){
 
 $("#deleteList").on("click",function(){
  if($("input:radio[name='delete']:checked").length==0){
-	 alert("선택된 게시물이 없습니다.")
+     Swal.fire('선택된 게시물이 없습니다!', '', 'warning')
  }else{
 //	 alert($("input:checkbox[id='monologueId']:checked").val());
 	 $.ajax({
@@ -185,7 +185,7 @@ $("#deleteList").on("click",function(){
 	        data : {monologueId : $("input:radio[id='monologueId']:checked").val()},
 	        contentType: "application/json",
 	        success: function (response){
-	        	alert(response);
+                Swal.fire("삭제되었습니다!", '', 'success')
 	        		//$("#monologueList"+"input:checkbox[id='monologueId']:checked").remove();
 	        		///$("#monologueList").remove();
 	            $.ajax({

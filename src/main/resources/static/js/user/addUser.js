@@ -31,18 +31,20 @@ function idCheck() {
 
 function emailCheck(){
     let email = $("#email").val();
+    let userId = $("#userId").val();
+    let mailCheck = {email:email,userId:userId};
     if (email === "") {
-        alert("메일 주소가 입력되지 않았습니다.");
+        Swal.fire('메일 주소가 입력되지 않았습니다!', '', 'warning')
     }else {
     $.ajax({
         url: '/restUser/emailCheck',
         type: 'get',
-        data: {email: email},
+        data: mailCheck,
         contentType: "application/json",
         success: function (data) {
             console.log("1=중복/0=중복아님" + data);
             if (data === 1) {
-                alert("이미 가입된 이메일입니다.")
+                Swal.fire('이미 가입된 이메일입니다!', '', 'info')
                 $("#submit").attr("disabled", true);
             } else {
                 $.ajax({
@@ -51,7 +53,7 @@ function emailCheck(){
                     data: {email: email},
                     dataType: 'json',
                     success: function (key) {
-                        alert("인증번호가 전송되었습니다.")
+                        Swal.fire('이메일이 전송되었습니다!', '', 'success')
                         $('#check').attr("value", key);
                     }
                 });
@@ -93,18 +95,18 @@ function checkCertificationNo() {
     let checkKey = $('#check').val();
     let certificationNo = $('#certificationNo').val();
     if(checkKey === "" && certificationNo=== ""){
-        alert("인증번호를 입력해주세요")
+        Swal.fire('인증번호를 입력해주세요!', '', 'success')
     } else if ($("#certificationNo").val() === checkKey) { //인증 키 값의 비교를 위해 텍스트인풋과 벨류를 비교
         // console.log("key" + checkKey);
         isCertification = true;//인증성공여부 check
         $("#certificationNo").css("color", "#0029a4");
         $("#certificationNo").text("인증완료");
-        alert("인증이 완료되었습니다.")
+        Swal.fire('인증되었습니다!', '', 'success')
     } else {
         isCertification = false; //인증실패
         $("#certificationNo").text("불일치");
         $("#certificationNo").css("color", "#ae0f11");
-        alert("인증이 실패했습니다.")
+        Swal.fire('인증번호가 일치하지 않습니다!', '', 'warning')
     }
 }
 
@@ -113,7 +115,7 @@ function submitCheck(){
     if (isCertification == true){
         return true;
     }else{
-        alert("메일 인증이 완료되지 않았습니다.");
+        Swal.fire('메일 인증이 완료되지 않았습니다!', '', 'warning')
         return false;
     }
 }

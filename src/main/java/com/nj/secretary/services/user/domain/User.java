@@ -33,11 +33,11 @@ public class User {
     private String motto;//좌우명
     private int certificationNo;//인증번호
     private String roles;//사용자권한부여
-    private Date withdrawalDate;//탈퇴일
+    private String withdrawalDate;//탈퇴일
     private boolean withdrawalStatus;//탈퇴상태
     private int blindCount;//블라인드처리된 게시물 수
-    private Date limitStartDate;//공유제한일
-    private Date limitEndDate;//공유제한일
+    private String limitStartDate;//공유제한일
+    private String limitEndDate;//공유제한일
     private boolean isDisplayTime;//레이아웃 설정
     private boolean isDisplayWeather;//레이아웃 설정
     private boolean isDisplayLocation;//레이아웃 설정

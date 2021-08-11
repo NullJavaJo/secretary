@@ -7,7 +7,8 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Stylish&display=swap" rel="stylesheet">
-
+    <script src="../../js/main/menu.js"></script>
+    <link rel="stylesheet" href='../../css/main/menu.css' />
 
     <style type="text/css">
         @font-face {
@@ -86,6 +87,35 @@
         <div id="btn"><input id="save" type="submit" value="저장"><a type="text" id="back" onclick="back()">뒤로</a></div>
 
     </form>
+</div>
+<div class="wrapper">
+
+    <input type="checkbox" id="menuToggler" class="input-toggler" />
+    <label for="menuToggler" class="menu-toggler">
+        <span class="menu-toggler__line"></span>
+        <span class="menu-toggler__line"></span>
+        <span class="menu-toggler__line"></span>
+    </label>
+    <aside class="sidebar">
+        <ul class="menu">
+            <li class="menu__item"><a class="menu__link" href="/user/login">Home</a></li>
+            <li class="menu__item"><a class="menu__link" href="/user/getUser">Profile</a></li>
+            <li class="menu__item"><a class="menu__link" href="/diary/getDiaryList">Diary</a></li>
+            <li class="menu__item"><a class="menu__link" href="/calendar/mainCalendar">Calendar</a></li>
+            <li class="menu__item"><a class="menu__link" href="/monologue/getMonologueList">Monologue</a></li>
+            <li class="menu__item"><a class="menu__link" href="/user/adminUser">Admin User</a></li>
+            <li class="menu__item"><a class="menu__link" href="/user/getAllUser">getAllUser</a></li>
+            <li class="menu__item"><a class="menu__link" href="/diary/adminPost">Admin Post</a></li>
+            <li class="menu__item"><a class="menu__link" href="/monologue/addQuestion">Add Question</a></li>
+            <li class="menu__item"><a class="menu__link" href="/monologue/getQuestionList">Questions</a></li>
+            <li class="menu__item"><a class="menu__link" href="/user/logout">Logout</a></li>
+        </ul>
+    </aside>
+
+    <main class="content">
+
+    </main>
+
 </div>
 </body>
 </html>

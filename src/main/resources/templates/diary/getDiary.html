@@ -12,6 +12,7 @@
     <!-- include summernote css/js -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <link rel="stylesheet" href='../../css/main/menu.css' />
     <script src="../../js/main/menu.js"></script>
 
@@ -22,7 +23,7 @@
 
     <!--글꼴-->
     <link href="https://fonts.googleapis.com/css2?family=Stylish&display=swap" rel="stylesheet">
-
+    <script src="https://use.fontawesome.com/b51c131c86.js"></script>
 
     <title>글쓰기</title>
     <style>
@@ -55,7 +56,7 @@
         }
 
         .diaryDate{
-            font-size: 100%
+            font-size: 120%
         }
 
 
@@ -76,7 +77,7 @@
         .container{
             display: grid;
             grid-template-columns: 1fr 1fr;
-            grid-template-rows: 1fr 4fr 1fr 1fr;
+            grid-template-rows: 1fr 4fr 1fr 1fr 1fr;
             gap: 20px;
             background-color: rgba(255, 255, 255, 1);
             padding: 30px;
@@ -173,12 +174,85 @@
         .addInfo img, .addInfo span{
             margin-right: 40px;
         }
+
+
+
+
+        .modal{
+            font-family: 'MapoGoldenPier';
+        }
+
+        .modal p{
+            color: black;
+            text-align: center;
+            font-size: 30px;
+            margin-top: 20px;
+            margin-bottom: 50px;
+        }
+
+        .modal input{
+            color: rgba(0,0,0,0.9);
+        }
+
+        .modal input::placeholder{
+            color: rgba(0,0,0,0.5);
+        }
+
+        .modal .modal-footer{
+            margin-bottom: 20px;
+        }
+
+        .modal .modal-content{
+            text-align: center;
+        }
+
+        .modal a{
+            color: rgba(0,0,0,0.5);
+            text-underline: none;
+            transition: 1s;
+        }
+        .modal a:hover{
+            color: black;
+            text-underline: black;
+            transition: 1s;
+        }
+
+        .modal button{
+            background-color: transparent;
+            border: 1px solid #ccc;
+            color: rgba(0,0,0,0.5);
+            text-underline: none;
+            transition: 1s;
+        }
+        .modal button:hover{
+            background-color: rgba(0,0,0,0.6);
+            border: 1px solid rgba(0,0,0,0.6);
+            color: white;
+            text-underline: black;
+            transition: 1s;
+        }
+
+        /*.modal #password-modal-open{*/
+        /*    color: rgba(0,0,0,0.5);*/
+        /*}*/
+        /*.modal #password-modal-open:hover{*/
+        /*    background-color: rgba(0,0,0,0.6);*/
+        /*    color: white;*/
+        /*}*/
+
+
+
+
     </style>
     <script type="text/javascript">
 
         window.onload = function(){
+
             var temp = $('.text img').detach();
+            if($('.text').has())
+            var vid = $('.text iframe').detach();
             $('#image').html(temp);
+            $('#image').append(vid);
         }
 
 
@@ -254,7 +328,7 @@
             $("#sendReport").on("click",function(e){
 
                 if($("input:checkbox[name='reason']:checked").length > 1){
-                    alert("신고사유는 한가지만 선택 가능합니다.")
+                    Swal.fire('신고 사유는 한가지만 선택가능합니다!', '', 'info')
                 }else{
                     let text = {
                         reportText : $("#textArea").val(),
@@ -267,7 +341,7 @@
                         data :JSON.stringify(text),
                         contentType: "application/json",
                         success: function (response){
-                            alert(response);
+                            Swal.fire(response, '', 'success')
                         }
                     });
                 }
@@ -285,7 +359,7 @@
                     contentType: "application/json",
                     success: function (response){
                         if($("#text").attr('name') == $("#target option:selected").val()){
-                            alert("이미 번역되었습니다.");
+                            Swal.fire('이미 번역되었습니다!', '', 'info')
                         }else{
                             $(".translatedText").remove();
                             if(JSON.parse(response).errorMessage != null){
@@ -307,7 +381,7 @@
                     data :JSON.stringify(diaryId),
                     contentType: "application/json",
                     success: function (response){
-                        alert(response);
+                        Swal.fire(response, '', 'info')
                     }
                 });
 
@@ -394,8 +468,11 @@
     <h2 id="pageTitle">일기 보기</h2><br><br><br>
     <div class="addInfo">
         <img class="diaryEmotion" th:src="${diary.emotionImg}">
+        <span class="diaryDate" th:text="${diary.location}"></span>
         <img class="diaryWeather" th:src="${diary.weather}">
         <span class="diaryDate" th:text="${diary.diaryDate}"></span>
+        <img th:if="${diary.shareStatus}==1" src="../../images/icon/diary/share-alt-solid.svg" style="width: 3%">
+
     </div>
     <div class="container">
 
@@ -410,6 +487,7 @@
         <input type="hidden" name="shareStatus" th:value="${diary.shareStatus}">
 
         <div class="translateSelect">
+
             <select id="source">
                 <option value="ko">한국어</option>
                 <option value="en">영어</option>
@@ -426,6 +504,7 @@
                 <option value="zh-TW">중국어-번체</option>
             </select>
             <img class="translate" src="../../images/icon/translateIcon.png" width="25px" height="25px" style="cursor: pointer">
+
         </div>
 
     </div>

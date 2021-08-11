@@ -145,8 +145,18 @@ public List<Monologue> getOtherMonologueList(String userId) throws Exception {
 
 
 	@Override
-	public void monologueReport(Report report) throws Exception {
-		monologueDAO.monologueReport(report);
+	public void addReport(Report report) throws Exception {
+		monologueDAO.addReport(report);
+	}
+
+	@Override
+	public int checkReporter(Report report) {
+		return monologueDAO.checkReporter(report);
+	}
+
+	@Override
+	public int reportMonologue(int monologueId) {
+		return monologueDAO.reportMonologue(monologueId);
 	}
 
 }

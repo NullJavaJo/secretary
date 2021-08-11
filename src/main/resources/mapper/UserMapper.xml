@@ -88,6 +88,15 @@
 		from users
 		where  user_name=#{userName} and  email=#{email}
 	</select>
+	
+	<select id="findPwd" parameterType="com.nj.secretary.services.user.domain.User"
+		resultMap="userSelectMap">
+
+		select user_id, email
+		from users
+		where user_Id=#{userId} AND withdrawal_status=0
+
+	</select>
 
 	<select id="userInfoCheck" resultType="Integer" parameterType="com.nj.secretary.services.user.domain.User">
 		SELECT COUNT(*)
@@ -135,7 +144,7 @@
 
 	<update id="updateUser" parameterType="com.nj.secretary.services.user.domain.User">
 		UPDATE users
-		SET user_name=#{userName},nickname=#{nickname},email=#{email},motto=#{motto}
+		SET user_name=#{userName},nickname=#{nickname},motto=#{motto}
 		WHERE user_id=#{userId}
 	</update>
 	
@@ -166,9 +175,16 @@
 		(withdrawalreasons_seq.NEXTVAL,#{withdrawalReasonType},#{withdrawalReasonText})
 	</insert>
 
-<select id="loginCheck" resultType="Integer" parameterType="com.nj.secretary.services.user.domain.User">
-        SELECT COUNT(*)
-        FROM users
-        WHERE user_id = #{userId} AND password = #{password}
-</select>
+	<select id="loginCheck" resultType="Integer" parameterType="com.nj.secretary.services.user.domain.User">
+			SELECT COUNT(*)
+			FROM users
+			WHERE user_id = #{userId} AND password = #{password}
+	</select>
+
+	<select id="getAllUser" resultMap="userSelectMap">
+
+		SELECT USER_ID,USER_NAME,NICKNAME,EMAIL,MOTTO,BLIND_COUNT,WITHDRAWAL_STATUS,to_char(WITHDRAWAL_DATE,'YYYY-MM-DD') WITHDRAWAL_DATE,to_char(LIMIT_START_DATE, 'YYYY-MM-DD') LIMIT_START_DATE,to_char(LIMIT_END_DATE,'YYYY-MM-DD') LIMIT_START_DATE FROM USERS
+
+	</select>
+
 </mapper>

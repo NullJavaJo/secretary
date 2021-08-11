@@ -87,7 +87,7 @@ p{
 }
 
 /* Heading */
-h2{
+.loginTitle{
     font-family: 'MapoGoldenPier';
     position: relative;
     margin-top: 5px;
